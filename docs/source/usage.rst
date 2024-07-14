@@ -6,29 +6,31 @@ Usage
 Installation
 ------------
 
-To use Lumache, first install it using pip:
+To use Vytal, first install it using pip:
 
 .. code-block:: console
 
-   (.venv) $ pip install lumache
+   (.venv) $ pip install vytal
 
-Creating recipes
+Getting gaze predictions
 ----------------
 
-To retrieve a list of random ingredients,
-you can use the ``lumache.get_random_ingredients()`` function:
+To start recording on the webcam in live time in the background of your own code execution
+, you can use the ``vytal.start_thread()`` function:
 
-.. autofunction:: lumache.get_random_ingredients
-
-The ``kind`` parameter should be either ``"meat"``, ``"fish"``,
-or ``"veggies"``. Otherwise, :py:func:`lumache.get_random_ingredients`
-will raise an exception.
-
-.. autoexception:: lumache.InvalidKindError
+.. autofunction:: vytal.start_thread
 
 For example:
 
->>> import lumache
->>> lumache.get_random_ingredients()
-['shells', 'gorgonzola', 'parsley']
+>>> from vytal.client import Client
+>>> key = "<your-key-here>"
+>>> api_client = Client(key, ipd=65)
+
+>>> vytal_api_loop = api_client.start_thread()
+
+>>> while True:
+    >>> print(api_client.preds[-1])
+
+This code will output the gaze predictions based on webcam footage. 
+
 

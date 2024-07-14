@@ -1,10 +1,9 @@
-Welcome to Lumache's documentation!
+Welcome to Vytal's documentation!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**Vytal** is a Python library for gaze prediction using a webcam or file input. It is designed to be simple and easy to use,
+ while providing the most accurate gaze predictions possible. It has the most advanced algorithm available on the market, using deep learning
+ to predict the gaze of a person in real time. 
 
 Check out the :doc:`usage` section for further information, including
 how to :ref:`installation` the project.

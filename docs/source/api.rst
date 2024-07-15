@@ -6,7 +6,7 @@ API
 
    vytal
 
-..py:module:: vytal.client(api_key: str, ipd: float = None)
+.. py:module:: vytal.client(api_key: str, ipd: float = None)
     
    The main class for the Vytal API client.
 

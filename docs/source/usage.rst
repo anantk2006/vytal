@@ -25,11 +25,11 @@ For example:
 >>> from vytal.client import Client
 >>> key = "<your-key-here>"
 >>> api_client = Client(key, ipd=65)
-The API Client is now initialized.
+>>> #The API Client is now initialized.
 >>> vytal_api_loop = api_client.start_thread()
-The API Client is now running in the background, viewing and predicting based on the webcam.
+>>> # The API Client is now running in the background, viewing and predicting based on the webcam.
 >>> while True:
-    >>> print(api_client.preds[-1])
+>>>     print(api_client.preds[-1])
 {'left': tensor([[[-0.1950], [-0.0949]]]), 'right': tensor([[[ 0.0131], [-0.2413]]]), 
 'le_3d': tensor([[[ 61.3681], [ 15.6595], [541.7325]]]), 're_3d': tensor([[[  1.2703], [ 13.9736], [542.0076]]]),
  'hr': tensor([[[ 0.9996, -0.0229,  0.0156], [ 0.0273,  0.9126, -0.4079], [-0.0049,  0.4081,  0.9129]]]), 
@@ -58,7 +58,7 @@ For example:
 >>> api_client = Client(key, ipd=65)
 >>> preds = api_client.predict_from_video("path/to/video.mp4")
 >>> print(preds)
-``preds`` will contain the predictions in a dictionary with each key mapping to that metric to all frames.
+>>> # ``preds`` will contain the predictions in a dictionary with each key mapping to that metric to all frames.
 
 
 

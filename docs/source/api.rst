@@ -6,20 +6,20 @@ API
 
    vytal
 
-vytal.client
+Client
 ------------
 Predicts gaze from webcam data
 
-.. py:module:: vytal.client
+.. py:module:: client
     
-.. py:function:: vytal.Client(api_key: str, ipd: float = None)
-   :module: vytal.client
+.. py:function:: Client(api_key: str, ipd: float = None)
+   :module: client
    :noindex:
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
 .. py:function:: predict_from_video(video_path: str, calib_mat: torch.Tensor = None, eye_frames: bool = False) -> Dict[str, Any]
-   :module: vytal.client
+   :module: client
    :noindex:
 
    Predicts the gaze of a person in a video file.
@@ -33,7 +33,7 @@ Predicts gaze from webcam data
    Each key maps to a tensor containing the predictions for each frame in the video.
 
 .. py:function:: start_thread(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False) -> threading.Thread
-    :module: vytal.client
+    :module: client
     :noindex:
     
     Starts a thread that continuously predicts the gaze of a person using a webcam in the background of your code's execution.
@@ -46,7 +46,7 @@ Predicts gaze from webcam data
     :return: The thread that is running the prediction loop.
 
 .. py:function:: end_thread(thread: threading.Thread)
-    :module: vytal.client
+    :module: client
     :noindex:
     
     Ends the thread that is running the prediction loop.
@@ -55,7 +55,7 @@ Predicts gaze from webcam data
     :return: None
 
 .. py:function:: predict_from_websocket(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False)
-    :module: vytal.client
+    :module: client
     :noindex:
     
     Asynchronously predicts the gaze of a person using a webcam in real time and returns back the predictions once run is complete/interrupted. 
@@ -68,7 +68,7 @@ Predicts gaze from webcam data
     :return: All predictions during time running at the end of run.
 
 .. py:function:: real_time_pred(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False)
-    :module: vytal.client
+    :module: client
     :noindex:
     
     Synchronously runs predict_from_websocket using asyncio. 
@@ -80,15 +80,15 @@ Predicts gaze from webcam data
     :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
     :return: All predictions during time running at the end of run. 
 
-vytal.adtech
+adtech
 ------------
 
-.. py:module:: vytal.adtech
+.. py:module:: adtech
 
     The module for advertisement testing.
 
 .. py:function:: analyze_eye_tracking_data(results, aois, fps, fixation_threshold_sec=0.5, distance_threshold=50)
-   :module: vytal.adtech
+   :module: adtech
    :noindex:
    Analyze eye tracking data to calculate metrics for Areas of Interest (AOIs) and general viewing behavior.
 
@@ -128,8 +128,8 @@ vytal.adtech
       - This function assumes that the eye tracking data points are equally spaced in time.
       - The fixation detection uses a simple distance-based threshold method.
 
-.. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]:
-   :module: vytal.adtech
+.. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]
+   :module: adtech
    :noindex:
    Provides an interactive interface for defining Areas of Interest (AOIs) on an image.
 
@@ -166,7 +166,7 @@ vytal.adtech
 
 .. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]],
                    image_path: str):
-   :module: vytal.adtech
+   :module: adtech
    :noindex:
    Visualizes the gaze path over the advertisement image.
 
@@ -198,9 +198,9 @@ vytal.adtech
    :raises Exception: For any other error occurring while reading the image file.
 
 .. py:function:: generate_heatmap(results: List[Dict[str, float]], image_path: str. bins: int = 50):
-    :module: vytal.adtech
-    :noindex:
-    Creates a heatmap of gaze intensity overlaid on the advertisement image.
+   :module: adtech
+   :noindex:
+   Creates a heatmap of gaze intensity overlaid on the advertisement image.
 
    This function generates a heatmap visualization of the gaze data, showing areas of high and low
    gaze concentration overlaid on the original image.
@@ -230,7 +230,7 @@ vytal.adtech
 
 .. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]],
                           aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
-   :module: vytal.adtech
+   :module: adtech
    :noindex:
    Performs statistical tests to compare AOI metrics between two groups.
 
@@ -269,7 +269,7 @@ vytal.adtech
    :raises ValueError: If an invalid test type is specified.
 
 .. py:function:: export_metrics_to_csv(aoi_metrics, general_metrics, filename)
-   :module: vytal.adtech
+   :module: adtech
    :noindex:
    Exports calculated metrics to a CSV file for further analysis in other software.
 
@@ -306,16 +306,15 @@ vytal.adtech
 
    :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
 
-vytal.hci
+hci
 ---------
-Helper functions for Human-Computer Interaction (HCI) testing.
 
-.. py:module:: vytal.hci
+.. py:module:: hci
     
         The module for Human-Computer Interaction (HCI) testing.
 
 .. py:function:: fixation_detection(gaze_points, distance_threshold=30, time_threshold=1.5)
-   :module: vytal.hci
+   :module: hci
    :noindex:
    Detects fixations in a series of gaze points using a dispersion-based algorithm.
 
@@ -353,7 +352,7 @@ Helper functions for Human-Computer Interaction (HCI) testing.
 
 
 .. py:function:: saccade_detection(gaze_points, velocity_threshold=1000)
-   :module: vytal.hci
+   :module: hci
    :noindex:
    Detects saccades in a series of gaze points using a velocity-based algorithm.
 
@@ -392,7 +391,7 @@ Helper functions for Human-Computer Interaction (HCI) testing.
 
 
 .. py:function:: detect_smooth_pursuit(gaze_points, time_window=100, velocity_threshold=30, direction_threshold=30)
-   :module: vytal.hci
+   :module: hci
    :noindex:
    Detect smooth pursuit movements in a sequence of gaze points.
 

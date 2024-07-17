@@ -97,16 +97,16 @@ adtech
 
    :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
                    representing the predicted x and y coordinates of the eye gaze.
-   :type results: list of dict
+   list of dict
    :param aois: A dictionary where keys are AOI names and values are tuples representing
                 the bounding rectangle of each AOI in the format (x1, y1, x2, y2).
-   :type aois: dict
+   dict
    :param fps: The frames per second of the recorded eye tracking data.
-   :type fps: int
+   int
    :param fixation_threshold_sec: Minimum duration in seconds for a gaze point to be considered a fixation.
-   :type fixation_threshold_sec: float
+   float
    :param distance_threshold: Maximum distance in pixels between consecutive gaze points to be considered part of the same fixation.
-   :type distance_threshold: float
+   float
 
    :return: A tuple containing two dictionaries:
             
@@ -138,7 +138,7 @@ adtech
    and GUI buttons.
 
    :param image_path: Path to the image file on which AOIs will be defined.
-   :type image_path: str
+   str
 
    :return: A dictionary where keys are AOI names and values are tuples representing 
             the bounding box of each AOI in the format (x1, y1, x2, y2), where (x1, y1) 
@@ -175,12 +175,12 @@ adtech
 
    :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
                    representing the predicted x and y coordinates of the eye gaze.
-   :type results: List[Dict[str, float]]
+   List[Dict[str, float]]
    :param aois: A dictionary where keys are AOI names and values are tuples representing 
                 the bounding box of each AOI in the format (x1, y1, x2, y2).
-   :type aois: Dict[str, Tuple[float, float, float, float]]
+   Dict[str, Tuple[float, float, float, float]]
    :param image_path: Path to the image file used as the background for the visualization.
-   :type image_path: str
+   str
 
    The function will:
 
@@ -207,11 +207,11 @@ adtech
 
    :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
                    representing the predicted x and y coordinates of the eye gaze.
-   :type results: List[Dict[str, float]]
+   List[Dict[str, float]]
    :param image_path: Path to the image file used as the background for the heatmap.
-   :type image_path: str
+   str
    :param bins: Number of bins to use for the 2D histogram. Default is 50.
-   :type bins: int
+   int
 
    The function will:
 
@@ -239,14 +239,14 @@ adtech
 
    :param group1_results: Gaze data for the first group. Each dict should contain
                           'pred_x' and 'pred_y' keys for gaze coordinates.
-   :type group1_results: List[Dict[str, float]]
+   List[Dict[str, float]]
    :param group2_results: Gaze data for the second group. Same format as group1_results.
-   :type group2_results: List[Dict[str, float]]
+   List[Dict[str, float]]
    :param aois: A dictionary where keys are AOI names and values are tuples representing 
                 the bounding box of each AOI in the format (x1, y1, x2, y2).
-   :type aois: Dict[str, Tuple[float, float, float, float]]
+   Dict[str, Tuple[float, float, float, float]]
    :param test: Statistical test to use. Either 't-test' or 'mann-whitney'. Default is 't-test'.
-   :type test: str
+   str
 
    :return: A dictionary containing the results of the statistical tests for each AOI. Each AOI entry includes:
             
@@ -278,11 +278,11 @@ adtech
 
    :param aoi_metrics: A nested dictionary where the outer key is the AOI name,
                        and the inner dictionary contains various metrics as key-value pairs.
-   :type aoi_metrics: Dict[str, Dict[str, float]]
+   Dict[str, Dict[str, float]]
    :param general_metrics: A dictionary of general metrics that apply to the entire viewing session.
-   :type general_metrics: Dict[str, float]
+   Dict[str, float]
    :param filename: The name of the output CSV file, including path if necessary.
-   :type filename: str
+   str
 
    The function will:
 
@@ -322,14 +322,14 @@ hci
    and temporal duration.
 
    :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
-   :type gaze_points: List[Tuple[float, float, float]]
+   List[Tuple[float, float, float]]
    :param distance_threshold: Maximum distance (in pixels) between a gaze point and the centroid 
                               of the current fixation to be considered part of that fixation. 
                               Default is 30 pixels.
-   :type distance_threshold: float
+   float
    :param time_threshold: Minimum duration (in seconds) for a group of gaze points to be 
                           considered a fixation. Default is 1.5 seconds.
-   :type time_threshold: float
+   float
 
    :return: A list of detected fixations, where each fixation is represented as a tuple 
             containing ((centroid_x, centroid_y), duration).
@@ -361,10 +361,10 @@ hci
 
    :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point. 
                        Timestamp is expected to be in milliseconds.
-   :type gaze_points: List[Tuple[float, float, float]]
+   List[Tuple[float, float, float]]
    :param velocity_threshold: Minimum velocity (in pixels per second) for an eye movement 
                               to be considered a saccade. Default is 1000 pixels/second.
-   :type velocity_threshold: float
+   float
 
    :return: A list of detected saccades, where each saccade is represented as a dictionary 
             containing start_point, end_point, duration, amplitude, peak_velocity, and average_velocity.
@@ -400,17 +400,17 @@ hci
 
    :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
                        Timestamp is expected to be in milliseconds.
-   :type gaze_points: List[Tuple[float, float, float]]
+   List[Tuple[float, float, float]]
    :param time_window: Minimum duration (in milliseconds) for a segment to be considered smooth pursuit.
                        Default is 100 ms.
-   :type time_window: int
+   int
    :param velocity_threshold: Maximum velocity (in pixels per second) for an eye movement 
                               to be considered smooth pursuit. Default is 30 pixels/second.
-   :type velocity_threshold: float
+   float
    :param direction_threshold: Maximum change in direction (in degrees) allowed between consecutive
                                gaze points to be considered part of the same smooth pursuit.
                                Default is 30 degrees.
-   :type direction_threshold: float
+   float
 
    :return: A list of detected smooth pursuit segments, where each segment is represented 
             as a tuple containing (start_index, end_index, duration).

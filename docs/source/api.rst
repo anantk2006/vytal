@@ -6,13 +6,15 @@ API
 
    vytal
 
-Vytal.client
+vytal.client
 ------------
+Predicts gaze from webcam data
 
-.. py:module:: vytal.client(api_key: str, ipd: float = None)
+.. py:module:: vytal.client
     
-   The main class for the Vytal API client.
-
+.. py:function:: vytal.Client(api_key: str, ipd: float = None)
+   :module: vytal.client
+   :noindex:
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
@@ -78,16 +80,16 @@ Vytal.client
     :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
     :return: All predictions during time running at the end of run. 
 
-Vytal.adtech
+vytal.adtech
 ------------
 
 .. py:module:: vytal.adtech
 
-    The module for the adtech helper functions.
+    The module for advertisement testing.
 
 .. py:function:: analyze_eye_tracking_data(results, aois, fps, fixation_threshold_sec=0.5, distance_threshold=50)
-    :module: vytal.adtech
-    :noindex:
+   :module: vytal.adtech
+   :noindex:
    Analyze eye tracking data to calculate metrics for Areas of Interest (AOIs) and general viewing behavior.
 
    This function processes a series of eye gaze predictions and calculates various metrics
@@ -127,8 +129,8 @@ Vytal.adtech
       - The fixation detection uses a simple distance-based threshold method.
 
 .. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]:
-    :module: vytal.adtech
-    :noindex:
+   :module: vytal.adtech
+   :noindex:
    Provides an interactive interface for defining Areas of Interest (AOIs) on an image.
 
    This function opens a matplotlib window displaying the specified image and allows
@@ -164,9 +166,9 @@ Vytal.adtech
 
 .. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]],
                    image_path: str):
-    :module: vytal.adtech
-    :noindex:
-    Visualizes the gaze path over the advertisement image.
+   :module: vytal.adtech
+   :noindex:
+   Visualizes the gaze path over the advertisement image.
 
    This function creates a plot showing the path of the viewer's gaze overlaid on the original image,
    along with the defined Areas of Interest (AOIs).
@@ -228,46 +230,47 @@ Vytal.adtech
 
 .. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]],
                           aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
-    :module: vytal.adtech
-    :noindex:
-   Exports calculated metrics to a CSV file for further analysis in other software.
+   :module: vytal.adtech
+   :noindex:
+   Performs statistical tests to compare AOI metrics between two groups.
 
-   This function takes the metrics calculated for Areas of Interest (AOIs) and general viewing behavior
-   and writes them to a CSV file in a structured format.
+   This function calculates and compares metrics for each Area of Interest (AOI) between two groups
+   of gaze data, using either a t-test or Mann-Whitney U test.
 
-   :param aoi_metrics: A nested dictionary where the outer key is the AOI name,
-                       and the inner dictionary contains various metrics as key-value pairs.
-   :type aoi_metrics: Dict[str, Dict[str, float]]
-   :param general_metrics: A dictionary of general metrics that apply to the entire viewing session.
-   :type general_metrics: Dict[str, float]
-   :param filename: The name of the output CSV file, including path if necessary.
-   :type filename: str
+   :param group1_results: Gaze data for the first group. Each dict should contain
+                          'pred_x' and 'pred_y' keys for gaze coordinates.
+   :type group1_results: List[Dict[str, float]]
+   :param group2_results: Gaze data for the second group. Same format as group1_results.
+   :type group2_results: List[Dict[str, float]]
+   :param aois: A dictionary where keys are AOI names and values are tuples representing 
+                the bounding box of each AOI in the format (x1, y1, x2, y2).
+   :type aois: Dict[str, Tuple[float, float, float, float]]
+   :param test: Statistical test to use. Either 't-test' or 'mann-whitney'. Default is 't-test'.
+   :type test: str
+
+   :return: A dictionary containing the results of the statistical tests for each AOI. Each AOI entry includes:
+            
+            - 'group1_mean': Mean value for group 1
+            - 'group2_mean': Mean value for group 2
+            - 'statistic': The test statistic
+            - 'p_value': The p-value of the test
+   :rtype: Dict
 
    The function will:
 
-   1. Create a new CSV file with the specified filename.
-   2. Write AOI metrics, with each row containing the AOI name, metric name, and value.
-   3. Write general metrics, with each row containing the metric name and value.
-
-   The CSV structure will be::
-
-       AOI Metrics
-       AOI, Metric, Value
-       [AOI metrics data]
-
-       General Metrics
-       Metric, Value
-       [General metrics data]
+   1. Calculate the proportion of gaze points within each AOI for both groups.
+   2. Perform the specified statistical test to compare these proportions between the groups.
+   3. Return the results including means, test statistic, and p-value for each AOI.
 
    .. note::
-      - If the file already exists, it will be overwritten.
-      - The function uses the csv module to ensure proper CSV formatting.
+      - The function assumes that the AOIs and gaze coordinates use the same coordinate system.
+      - The choice of test should be based on the nature of your data and experimental design.
 
-   :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
+   :raises ValueError: If an invalid test type is specified.
 
 .. py:function:: export_metrics_to_csv(aoi_metrics, general_metrics, filename)
-    :module: vytal.adtech
-    :noindex:
+   :module: vytal.adtech
+   :noindex:
    Exports calculated metrics to a CSV file for further analysis in other software.
 
    This function takes the metrics calculated for Areas of Interest (AOIs) and general viewing behavior
@@ -302,3 +305,134 @@ Vytal.adtech
       - The function uses the csv module to ensure proper CSV formatting.
 
    :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
+
+vytal.hci
+---------
+Helper functions for Human-Computer Interaction (HCI) testing.
+
+.. py:module:: vytal.hci
+    
+        The module for Human-Computer Interaction (HCI) testing.
+
+.. py:function:: fixation_detection(gaze_points, distance_threshold=30, time_threshold=1.5)
+   :module: vytal.hci
+   :noindex:
+   Detects fixations in a series of gaze points using a dispersion-based algorithm.
+
+   This function processes a list of gaze points and identifies fixations based on spatial proximity 
+   and temporal duration.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param distance_threshold: Maximum distance (in pixels) between a gaze point and the centroid 
+                              of the current fixation to be considered part of that fixation. 
+                              Default is 30 pixels.
+   :type distance_threshold: float
+   :param time_threshold: Minimum duration (in seconds) for a group of gaze points to be 
+                          considered a fixation. Default is 1.5 seconds.
+   :type time_threshold: float
+
+   :return: A list of detected fixations, where each fixation is represented as a tuple 
+            containing ((centroid_x, centroid_y), duration).
+   :rtype: List[Tuple[Tuple[float, float], float]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points.
+   2. Groups consecutive points that are within the `distance_threshold` of the current fixation's centroid.
+   3. When a point exceeds the distance threshold, it checks if the current group of points meets the `time_threshold`.
+   4. If the time threshold is met, it records the fixation and starts a new potential fixation group.
+   5. After processing all points, it checks if the last group qualifies as a fixation.
+
+   .. note::
+      - This implementation uses a simple dispersion-based algorithm and may not account for more complex eye movement patterns.
+      - The choice of `distance_threshold` and `time_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
+
+   :raises ValueError: If `gaze_points` is empty or contains invalid data.
+
+
+
+.. py:function:: saccade_detection(gaze_points, velocity_threshold=1000)
+   :module: vytal.hci
+   :noindex:
+   Detects saccades in a series of gaze points using a velocity-based algorithm.
+
+   This function processes a list of gaze points and identifies saccades based on the velocity 
+   of eye movement between consecutive points.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point. 
+                       Timestamp is expected to be in milliseconds.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param velocity_threshold: Minimum velocity (in pixels per second) for an eye movement 
+                              to be considered a saccade. Default is 1000 pixels/second.
+   :type velocity_threshold: float
+
+   :return: A list of detected saccades, where each saccade is represented as a dictionary 
+            containing start_point, end_point, duration, amplitude, peak_velocity, and average_velocity.
+   :rtype: List[Dict[str, Union[Tuple[float, float, float], float]]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points, calculating the velocity between consecutive points.
+   2. When the velocity exceeds the threshold, it starts or continues a saccade.
+   3. When the velocity drops below the threshold, it ends the current saccade (if any).
+   4. For each saccade, it calculates:
+      - Start and end points
+      - Duration (in milliseconds)
+      - Amplitude (total distance traveled)
+      - Peak velocity
+      - Average velocity
+
+   .. note::
+      - This implementation uses a simple velocity-based algorithm and may not account for more complex eye movement patterns.
+      - The choice of `velocity_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
+      - The function assumes that timestamps are in milliseconds and converts them to seconds for velocity calculations.
+
+   :raises ValueError: If `gaze_points` contains fewer than two points or contains invalid data.
+
+
+.. py:function:: detect_smooth_pursuit(gaze_points, time_window=100, velocity_threshold=30, direction_threshold=30)
+   :module: vytal.hci
+   :noindex:
+   Detect smooth pursuit movements in a sequence of gaze points.
+
+   This function analyzes a series of gaze points to identify segments that represent smooth pursuit eye movements,
+   based on velocity and direction consistency over a specified time window.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
+                       Timestamp is expected to be in milliseconds.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param time_window: Minimum duration (in milliseconds) for a segment to be considered smooth pursuit.
+                       Default is 100 ms.
+   :type time_window: int
+   :param velocity_threshold: Maximum velocity (in pixels per second) for an eye movement 
+                              to be considered smooth pursuit. Default is 30 pixels/second.
+   :type velocity_threshold: float
+   :param direction_threshold: Maximum change in direction (in degrees) allowed between consecutive
+                               gaze points to be considered part of the same smooth pursuit.
+                               Default is 30 degrees.
+   :type direction_threshold: float
+
+   :return: A list of detected smooth pursuit segments, where each segment is represented 
+            as a tuple containing (start_index, end_index, duration).
+   :rtype: List[Tuple[int, int, float]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points, calculating velocity and direction between consecutive points.
+   2. Identifies continuous segments where:
+      - The velocity remains below the `velocity_threshold`
+      - The change in direction remains below the `direction_threshold`
+      - The duration of the segment is at least `time_window`
+   3. Records each qualifying segment as a smooth pursuit movement.
+
+   .. note::
+      - This implementation uses a simple algorithm based on velocity and direction consistency.
+      - The choice of `velocity_threshold`, `direction_threshold`, and `time_window` can significantly 
+        affect the results and should be tuned based on the specific use case and recording setup.
+      - The function assumes that timestamps in `gaze_points` are in milliseconds.
+
+   :raises ValueError: If `gaze_points` contains fewer than two points or contains invalid data.
+    
+
+

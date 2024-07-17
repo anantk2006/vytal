@@ -4,9 +4,9 @@ API
 .. autosummary::
    :toctree: generated
 
-   vytal.client
-   vytal.hci
-   vytal.adtech
+   client
+   hci
+   adtech
 
 Client
 ------------

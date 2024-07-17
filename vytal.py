@@ -304,7 +304,7 @@ class Client:
                 params=params,
                 # files = {"file": f},
                 data=f.read(),
-                timeout=1000,
+                timeout=1000,  
             )
             
             try:

@@ -15,9 +15,8 @@ Predicts gaze from webcam data
 .. py:module:: vytal.client
     
 .. py:function:: Client(api_key: str, ipd: float = None)
-   :module: vytal.client
    :noindex:
-   
+
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
@@ -90,11 +89,7 @@ Advertising Technology
 
     The module for advertisement testing.
 
-.. py:function:: test_function(r)
-    :module: vytal.adtech
-    :noindex:
 
-    :param r: does absolutely nothing
     
 
 .. py:function:: analyze_eye_tracking_data(results, aois, fps, fixation_threshold_sec=0.5, distance_threshold=50)
@@ -176,8 +171,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file.
 
-.. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]],
-                   image_path: str):
+.. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], image_path: str):
    :module: vytal.adtech
    :noindex:
 
@@ -242,8 +236,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file or processing the data.    
 
-.. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]],
-                          aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
+.. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
    :module: vytal.adtech
    :noindex:
 

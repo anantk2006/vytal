@@ -5,8 +5,8 @@ API
    :toctree: generated
 
    client
-   hci
    adtech
+   hci
 
 Client
 ------------
@@ -17,6 +17,7 @@ Predicts gaze from webcam data
 .. py:function:: Client(api_key: str, ipd: float = None)
    :module: vytal.client
    :noindex:
+   
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
@@ -92,12 +93,14 @@ Advertising Technology
 .. py:function:: test_function(r)
     :module: vytal.adtech
     :noindex:
+
     :param r: does absolutely nothing
     
 
 .. py:function:: analyze_eye_tracking_data(results, aois, fps, fixation_threshold_sec=0.5, distance_threshold=50)
    :module: vytal.adtech
    :noindex:
+
    Analyze eye tracking data to calculate metrics for Areas of Interest (AOIs) and general viewing behavior.
 
    This function processes a series of eye gaze predictions and calculates various metrics
@@ -139,6 +142,7 @@ Advertising Technology
 .. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]
    :module: vytal.adtech
    :noindex:
+
    Provides an interactive interface for defining Areas of Interest (AOIs) on an image.
 
    This function opens a matplotlib window displaying the specified image and allows
@@ -176,6 +180,7 @@ Advertising Technology
                    image_path: str):
    :module: vytal.adtech
    :noindex:
+
    Visualizes the gaze path over the advertisement image.
 
    This function creates a plot showing the path of the viewer's gaze overlaid on the original image,
@@ -208,6 +213,7 @@ Advertising Technology
 .. py:function:: generate_heatmap(results: List[Dict[str, float]], image_path: str. bins: int = 50):
    :module: vytal.adtech
    :noindex:
+
    Creates a heatmap of gaze intensity overlaid on the advertisement image.
 
    This function generates a heatmap visualization of the gaze data, showing areas of high and low
@@ -240,6 +246,7 @@ Advertising Technology
                           aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
    :module: vytal.adtech
    :noindex:
+
    Performs statistical tests to compare AOI metrics between two groups.
 
    This function calculates and compares metrics for each Area of Interest (AOI) between two groups
@@ -279,6 +286,7 @@ Advertising Technology
 .. py:function:: export_metrics_to_csv(aoi_metrics, general_metrics, filename)
    :module: vytal.adtech
    :noindex:
+
    Exports calculated metrics to a CSV file for further analysis in other software.
 
    This function takes the metrics calculated for Areas of Interest (AOIs) and general viewing behavior
@@ -324,6 +332,7 @@ HCI
 .. py:function:: fixation_detection(gaze_points, distance_threshold=30, time_threshold=1.5)
    :module: vytal.hci
    :noindex:
+
    Detects fixations in a series of gaze points using a dispersion-based algorithm.
 
    This function processes a list of gaze points and identifies fixations based on spatial proximity 
@@ -362,6 +371,7 @@ HCI
 .. py:function:: saccade_detection(gaze_points, velocity_threshold=1000)
    :module: vytal.hci
    :noindex:
+
    Detects saccades in a series of gaze points using a velocity-based algorithm.
 
    This function processes a list of gaze points and identifies saccades based on the velocity 
@@ -401,6 +411,7 @@ HCI
 .. py:function:: detect_smooth_pursuit(gaze_points, time_window=100, velocity_threshold=30, direction_threshold=30)
    :module: vytal.client
    :noindex:
+
    Detect smooth pursuit movements in a sequence of gaze points.
 
    This function analyzes a series of gaze points to identify segments that represent smooth pursuit eye movements,

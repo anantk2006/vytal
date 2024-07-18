@@ -171,7 +171,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file.
 
-.. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], image_path: str):
+.. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], image_path: str)
    :module: vytal.adtech
    :noindex:
 
@@ -204,7 +204,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file.
 
-.. py:function:: generate_heatmap(results: List[Dict[str, float]], image_path: str. bins: int = 50):
+.. py:function:: generate_heatmap(results: List[Dict[str, float]], image_path: str. bins: int = 50)
    :module: vytal.adtech
    :noindex:
 
@@ -236,7 +236,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file or processing the data.    
 
-.. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test'):
+.. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test')
    :module: vytal.adtech
    :noindex:
 
@@ -402,7 +402,7 @@ HCI
 
 
 .. py:function:: detect_smooth_pursuit(gaze_points, time_window=100, velocity_threshold=30, direction_threshold=30)
-   :module: vytal.client
+   :module: vytal.hci
    :noindex:
 
    Detect smooth pursuit movements in a sequence of gaze points.

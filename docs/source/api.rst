@@ -89,6 +89,12 @@ Advertising Technology
 
     The module for advertisement testing.
 
+.. py:function:: test_function(r)
+    :module: vytal.adtech
+    :noindex:
+    :param r: does absolutely nothing
+    
+
 .. py:function:: analyze_eye_tracking_data(results, aois, fps, fixation_threshold_sec=0.5, distance_threshold=50)
    :module: vytal.adtech
    :noindex:

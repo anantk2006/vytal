@@ -519,7 +519,7 @@ Cognitive Science
 
    Detects fixations in eye tracking data using a dispersion-based algorithm. Fixations are identified as periods where the gaze remains within a defined spatial threshold for a minimum time.
 
-   :param data: (List[Dict]) Eye tracking data with each entry containing:
+   :param data: (List[Dict]) Eye tracking data with each entry containing
             - 'time' (float): Timestamp in milliseconds.
             - 'POG_x' (float): Gaze position X-coordinate.
             - 'POG_y' (float): Gaze position Y-coordinate.
@@ -528,14 +528,14 @@ Cognitive Science
    :param duration_threshold: (float) Minimum duration in milliseconds for a valid fixation.
    :param angle_type: (str) Specifies which angle data to use for additional fixation info ('face', 'left', 'right').
 
-   :return: A list of dictionaries, each of which represents a detected fixation, containing:
-      - 'start_index' (int): Start index of fixation in data.
-      - 'end_index' (int): End index of fixation.
-      - 'duration' (float): Duration of fixation in milliseconds.
-      - 'centroid_x' (float): Average X-coordinate of fixation.
-      - 'centroid_y' (float): Average Y-coordinate of fixation.
-      - 'dispersion' (float): Calculated dispersion of fixation.
-      - 'mean_angle' (float): Mean angle during the fixation according to 'angle_type'.
+   :return: A list of dictionaries, each of which represents a detected fixation, containing
+         - 'start_index' (int): Start index of fixation in data.
+         - 'end_index' (int): End index of fixation.
+         - 'duration' (float): Duration of fixation in milliseconds.
+         - 'centroid_x' (float): Average X-coordinate of fixation.
+         - 'centroid_y' (float): Average Y-coordinate of fixation.
+         - 'dispersion' (float): Calculated dispersion of fixation.
+         - 'mean_angle' (float): Mean angle during the fixation according to 'angle_type'.
 
    :rtype: List[Dict]
 

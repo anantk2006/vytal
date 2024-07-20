@@ -528,7 +528,7 @@ Cognitive Science
    :param duration_threshold: (float) Minimum duration in milliseconds for a valid fixation.
    :param angle_type: (str) Specifies which angle data to use for additional fixation info ('face', 'left', 'right').
 
-   :return: A dictionary with keys 'left' and 'right', each containing a list of
+   :return: A list of dictionaries, each of which represents a detected fixation, containing:
         dictionaries. Each dictionary represents a detected saccade with the following keys:
             - 'start_index' (int): Start index of fixation in data.
             - 'end_index' (int): End index of fixation.

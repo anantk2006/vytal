@@ -7,6 +7,7 @@ API
    client
    adtech
    hci
+   cogsci
 
 Client
 ------------
@@ -481,46 +482,36 @@ Cognitive Science
    :param data: (List[Dict]) A list of dictionaries containing eye tracking data.
    :param sampling_rate: (float) The sampling rate of the eye tracking data in Hz.
 
-.. py:function:: fixation_detection(gaze_points: List[Tuple[float, float, float], distance_threshold: float=30, time_threshold_ms: float=1500)
-   :module: vytal.hci
+.. py:function:: detect_saccades(data: List[Dict], sampling_rate: float, velocity_threshold: float = 30, min_duration: float = 30, accel_threshold: float = 0, angle_type: str = 'face') -> Dict[str, List[Dict]]:
+   :module: vytal.cogsci
    :noindex:
 
-   Detects fixations in a series of gaze points using a dispersion-based algorithm.
+   Detects saccades in eye tracking data for both left and right eyes.
 
-   This function processes a list of gaze points and identifies fixations based on spatial proximity 
-   and temporal duration.
+    This function processes eye tracking data to identify saccades based on velocity and acceleration thresholds. It calculates velocities and accelerations from the eye angle data, detects potential saccades, and then filters and refines these detections to produce a final list of saccades for each eye.
 
-   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
-   :type gaze_points: List[Tuple[float, float, float]]
-   :param distance_threshold: Maximum distance (in pixels) between a gaze point and the centroid 
-                              of the current fixation to be considered part of that fixation. 
-                              Default is 30 pixels.
-   :type distance_threshold: float
-   :param time_threshold_ms: Minimum duration (in milliseconds) for a group of gaze points to be 
-                          considered a fixation. Default is 1500 milliseconds.
-   :type time_threshold_ms: float
+   :param data: (List[Dict]) A list of dictionaries containing eye tracking data. Each dictionary should have keys 'time', 'left', 'right', 'face' (angles in radians).
+   :param sampling_rate: (float) The sampling rate of the eye tracking data in Hz.
+   :param velocity_threshold: (float, optional) The minimum peak velocity in deg/sec to consider a saccade. Defaults to 30 deg/sec.
+   :param min_duration: (float, optional) The minimum duration of a saccade in milliseconds. Defaults to 30 ms.
+   :param accel_threshold: (float, optional) The minimum peak acceleration in deg/sec^2 to consider a saccade. Defaults to 0 deg/sec^2 (no acceleration filtering).
+   :param angle_type: (str, optional) The type of angle to use for saccade detection. Can be 'face', 'left', or 'right'. Defaults to 'face'.
 
-   :return: A list of detected fixations, where each fixation is represented as a tuple 
-            containing ((centroid_x, centroid_y), duration).
-   :rtype: List[Tuple[Tuple[float, float], float]]
-
-   The function works as follows:
-
-   1. Iterates through the gaze points.
-   2. Groups consecutive points that are within the `distance_threshold` of the current fixation's centroid.
-   3. When a point exceeds the distance threshold, it checks if the current group of points meets the `time_threshold_ms`.
-   4. If the time threshold is met, it records the fixation and starts a new potential fixation group.
-   5. After processing all points, it checks if the last group qualifies as a fixation.
+   :return: A dictionary with keys 'left' and 'right', each containing a list of
+        dictionaries. Each dictionary represents a detected saccade with the following keys:
+            - 'start': Index of saccade start in the original data list
+            - 'end': Index of saccade end
+            - 'duration': Duration of the saccade in milliseconds
+            - 'peak': Index of peak velocity
+            - 'peak_velocity': Maximum velocity reached during the saccade (deg/sec)
+            - 'amplitude': Change in eye angle during the saccade (degrees)
+   :rtype: Dict[str, List[Dict]]
 
    .. note::
-      - This implementation uses a simple dispersion-based algorithm and may not account for more complex eye movement patterns.
-      - The choice of `distance_threshold` and `time_threshold_ms` can significantly affect the results and should be tuned based on the specific use case and recording setup.
+      - This function uses a sophisticated algorithm to detect saccades, including peak detection,
+        acceleration thresholding, and removal of overlapping saccades.
 
-   :raises ValueError:
-      - If ``distance_threshold`` or ``time_threshold_ms`` is non-positive.
-      - If ``gaze_points`` is empty or contains invalid data.
-
-
+   :raises ValueError: If the input data is empty or doesn't contain the required keys.
 
 .. py:function:: saccade_detection(gaze_points: List[Tuple[float, float, float]], velocity_threshold: float=1000)
    :module: vytal.hci

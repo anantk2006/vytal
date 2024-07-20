@@ -27,7 +27,7 @@ Predicts gaze from webcam data
    Predicts the gaze of a person in a video file.
 
    :param video_path: (str) The path to the video file.
-   :param calib: A calibration object or data used for prediction. This can be an instance of ``RBFInterpolator``, a string, or bytes, which represent precomputed calibration data.
+   :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
    :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
    :return: A dictionary containing the gaze predictions. 
    The keys are 'left', 'right', 'le_3d', 're_3d', 'hr', 'ht', 'blinked', 

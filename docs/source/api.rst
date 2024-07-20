@@ -142,7 +142,7 @@ Advertising Technology
       - This function assumes that the eye tracking data points are equally spaced in time.
       - The fixation detection uses a simple distance-based threshold method.
 
-   :raises ValueError:
+   :raises ValueError
       - If ``results`` or ``aois`` is empty.
       - If ``fps``, ``fixation_threshold``, or ``distance threshold`` are non-positive.
       - The dictionaries in ``results`` or the ``aois`` are invalid.
@@ -287,7 +287,7 @@ Advertising Technology
       - The function assumes that the AOIs and gaze coordinates use the same coordinate system.
       - The choice of test should be based on the nature of your data and experimental design.
 
-   :raises ValueError:
+   :raises ValueError
       - If ``group1_results``, ``group2_results``, or ``aois`` is empty.
       - If an invalid test type is used.
 
@@ -329,7 +329,7 @@ Advertising Technology
       - The function uses the csv module to ensure proper CSV formatting.
 
    :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
-   :raises ValueError:
+   :raises ValueError
       - If ``aoi_metrics`` or ``general_metrics`` is not a dictionary.
       - Filename is not a csv.
 
@@ -340,7 +340,7 @@ HCI
     
         The module for Human-Computer Interaction (HCI) testing.
 
-.. py:function:: fixation_detection(gaze_points, distance_threshold=30, time_threshold=1.5)
+.. py:function:: fixation_detection(gaze_points: List[Tuple[float, float, float], distance_threshold: float=30, time_threshold: float=1.5)
    :module: vytal.hci
    :noindex:
 

@@ -142,7 +142,7 @@ Advertising Technology
       - This function assumes that the eye tracking data points are equally spaced in time.
       - The fixation detection uses a simple distance-based threshold method.
 
-   :raises ValueError
+   :raises ValueError:
       - If ``results`` or ``aois`` is empty.
       - If ``fps``, ``fixation_threshold``, or ``distance threshold`` are non-positive.
       - The dictionaries in ``results`` or the ``aois`` are invalid.
@@ -287,7 +287,7 @@ Advertising Technology
       - The function assumes that the AOIs and gaze coordinates use the same coordinate system.
       - The choice of test should be based on the nature of your data and experimental design.
 
-   :raises ValueError
+   :raises ValueError:
       - If ``group1_results``, ``group2_results``, or ``aois`` is empty.
       - If an invalid test type is used.
 
@@ -329,7 +329,7 @@ Advertising Technology
       - The function uses the csv module to ensure proper CSV formatting.
 
    :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
-   :raises ValueError
+   :raises ValueError:
       - If ``aoi_metrics`` or ``general_metrics`` is not a dictionary.
       - Filename is not a csv.
 
@@ -375,7 +375,9 @@ HCI
       - This implementation uses a simple dispersion-based algorithm and may not account for more complex eye movement patterns.
       - The choice of `distance_threshold` and `time_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
 
-   :raises ValueError: If `gaze_points` is empty or contains invalid data.
+   :raises ValueError:
+      - If 'distance_threshold' or 'time_threshold' is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
 
 
 

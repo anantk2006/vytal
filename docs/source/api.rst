@@ -376,12 +376,12 @@ HCI
       - The choice of `distance_threshold` and `time_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
 
    :raises ValueError:
-      - If 'distance_threshold' or 'time_threshold' is non-positive.
+      - If ``distance_threshold`` or ``time_threshold`` is non-positive.
       - If ``gaze_points`` is empty or contains invalid data.
 
 
 
-.. py:function:: saccade_detection(gaze_points, velocity_threshold=1000)
+.. py:function:: saccade_detection(gaze_points: List[Tuple[float, float, float]], velocity_threshold: float=1000)
    :module: vytal.hci
    :noindex:
 
@@ -418,10 +418,11 @@ HCI
       - The choice of `velocity_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
       - The function assumes that timestamps are in milliseconds and converts them to seconds for velocity calculations.
 
-   :raises ValueError: If `gaze_points` contains fewer than two points or contains invalid data.
+   :raises ValueError
+      - If ``velocity_threshold`` is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
 
-
-.. py:function:: detect_smooth_pursuit(gaze_points, time_window=100, velocity_threshold=30, direction_threshold=30)
+.. py:function:: detect_smooth_pursuit(gaze_points: List[Tuple[float, float, float]], time_window: int=100, velocity_threshold: float=30, direction_threshold: float=30)
    :module: vytal.hci
    :noindex:
 
@@ -463,7 +464,9 @@ HCI
         affect the results and should be tuned based on the specific use case and recording setup.
       - The function assumes that timestamps in `gaze_points` are in milliseconds.
 
-   :raises ValueError: If `gaze_points` contains fewer than two points or contains invalid data.
+   :raises ValueError:
+      - If ``distance_threshold``, ``time_threshold``, or ``velocity_threshold`` is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
     
 
 

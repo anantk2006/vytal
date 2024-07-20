@@ -20,6 +20,16 @@ Predicts gaze from webcam data
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
+.. py:function:: calibrate(save_directory: str = None) -> Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes]
+   :module: vytal.client
+   :noindex:
+
+   Calibrates your personal gaze tracker with eye-tracking process.
+
+   :param save_directory: (str) The directory to save calibration data to. Calibration data is formatted as '.pkl' file.
+   :return: scipy.interpolate._rbfinterp.RBFInterpolator, str, or bytes containing calibration data.
+   The user will be presented with a calibration task consisting of focusing on spinning triangles at different locations on the screen. For effective calibration, instructions should be followed closely.
+
 .. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> Dict[str, Any]
    :module: vytal.client
    :noindex:
@@ -66,7 +76,7 @@ Predicts gaze from webcam data
     :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
     :param verbose: (bool) Whether to print the predictions to the console.
     :param show_frame: (bool) Whether to show the webcam feed.
-    :return: All predictions during time running at the end of run.
+    :return: All predictions during the time running at the end of run.
 
 .. py:function:: real_time_pred(cam_id: int = 0, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, verbose: bool = False, show_frame: bool = False)
     :module: vytal.client
@@ -78,7 +88,7 @@ Predicts gaze from webcam data
     :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
     :param verbose: (bool) Whether to print the predictions to the console.
     :param show_frame: (bool) Whether to show the webcam feed.
-    :return: All predictions during time running at the end of run. 
+    :return: Real-time predictions during the time running.
 
 Advertising Technology
 ------------

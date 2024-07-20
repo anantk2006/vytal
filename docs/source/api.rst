@@ -20,28 +20,28 @@ Predicts gaze from webcam data
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
-.. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> None
+.. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> Dict[str, Any]
    :module: vytal.client
    :noindex:
 
    Predicts the gaze of a person in a video file.
 
    :param video_path: (str) The path to the video file.
-   :param calib_mat: (3x3 np.array) The calibration matrix for the camera. 
+   :param calib: A calibration object or data used for prediction. This can be an instance of ``RBFInterpolator``, a string, or bytes, which represent precomputed calibration data.
    :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
    :return: A dictionary containing the gaze predictions. 
    The keys are 'left', 'right', 'le_3d', 're_3d', 'hr', 'ht', 'blinked', 
    and optionally "right_eye_frame" and "left_eye_frame" if eye_frames is True.
    Each key maps to a tensor containing the predictions for each frame in the video.
 
-.. py:function:: start_thread(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False) -> threading.Thread
+.. py:function:: start_thread(cam_id: int = 0, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False) -> threading.Thread
     :module: vytal.client
     :noindex:
     
     Starts a thread that continuously predicts the gaze of a person using a webcam in the background of your code's execution.
     
     :param cam_id: (int) The ID of the webcam to use. Defaults to 0 (normally used).
-    :param calib_mat: (3x3 np.array) The calibration matrix for the camera.
+    :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
     :param verbose: (bool) Whether to print the predictions to the console.
     :param show_frame: (bool) Whether to show the webcam feed.
     :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)

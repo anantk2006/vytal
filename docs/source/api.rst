@@ -20,14 +20,14 @@ Predicts gaze from webcam data
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
-.. py:function:: calibrate(save_directory: str = None) -> Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes]
+.. py:function:: calibrate(save_directory: str = None) -> Union[str, bytes]
    :module: vytal.client
    :noindex:
 
    Calibrates your personal gaze tracker with eye-tracking process.
 
    :param save_directory: (str) The directory to save calibration data to. Calibration data is formatted as '.pkl' file.
-   :return: scipy.interpolate._rbfinterp.RBFInterpolator, str, or bytes containing calibration data.
+   :return: A string or bytes containing calibration data.
    The user will be presented with a calibration task consisting of focusing on spinning triangles at different locations on the screen. For effective calibration, instructions should be followed closely.
 
 .. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> Dict[str, Any]

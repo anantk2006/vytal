@@ -529,13 +529,13 @@ Cognitive Science
    :param angle_type: (str) Specifies which angle data to use for additional fixation info ('face', 'left', 'right').
 
    :return: A list of dictionaries, each of which represents a detected fixation, containing:
-            - 'start_index' (int): Start index of fixation in data.
-            - 'end_index' (int): End index of fixation.
-            - 'duration' (float): Duration of fixation in milliseconds.
-            - 'centroid_x' (float): Average X-coordinate of fixation.
-            - 'centroid_y' (float): Average Y-coordinate of fixation.
-            - 'dispersion' (float): Calculated dispersion of fixation.
-            - 'mean_angle' (float): Mean angle during the fixation according to 'angle_type'.
+            - 'start_index': Start index of fixation in data.
+            - 'end_index': End index of fixation.
+            - 'duration': Duration of fixation in milliseconds.
+            - 'centroid_x': Average X-coordinate of fixation.
+            - 'centroid_y': Average Y-coordinate of fixation.
+            - 'dispersion': Calculated dispersion of fixation.
+            - 'mean_angle': Mean angle during the fixation according to 'angle_type'.
    :rtype: List[Dict]
 
    :raises ValueError: If data is empty or missing required keys.

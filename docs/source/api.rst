@@ -56,30 +56,28 @@ Predicts gaze from webcam data
     :param thread: The thread to end.
     :return: None
 
-.. py:function:: predict_from_websocket(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False)
+.. py:function:: predict_from_websocket(cam_id: int = 0, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, verbose: bool = False, show_frame: bool = False)
     :module: vytal.client
     :noindex:
     
     Asynchronously predicts the gaze of a person using a webcam in real time and returns back the predictions once run is complete/interrupted. 
     
     :param cam_id: (int) The ID of the webcam to use. Defaults to 0 (normally used).
-    :param calib_mat: (3x3 np.array) The calibration matrix for the camera.
+    :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
     :param verbose: (bool) Whether to print the predictions to the console.
     :param show_frame: (bool) Whether to show the webcam feed.
-    :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
     :return: All predictions during time running at the end of run.
 
-.. py:function:: real_time_pred(cam_id: int = 0, calib_mat: np.array = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False)
+.. py:function:: real_time_pred(cam_id: int = 0, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, verbose: bool = False, show_frame: bool = False)
     :module: vytal.client
     :noindex:
     
     Synchronously runs predict_from_websocket using asyncio. 
     
     :param cam_id: (int) The ID of the webcam to use. Defaults to 0 (normally used).
-    :param calib_mat: (3x3 np.array) The calibration matrix for the camera.
+    :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
     :param verbose: (bool) Whether to print the predictions to the console.
     :param show_frame: (bool) Whether to show the webcam feed.
-    :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
     :return: All predictions during time running at the end of run. 
 
 Advertising Technology

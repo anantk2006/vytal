@@ -20,7 +20,7 @@ Predicts gaze from webcam data
    :param api_key: (str) The API key for the Vytal API.
    :param ipd: (float) The inter-pupillary distance of the person in the video. Defaults to None.
 
-.. py:function:: predict_from_video(video_path: str, calib_mat: torch.Tensor = None, eye_frames: bool = False) -> Dict[str, Any]
+.. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> None
    :module: vytal.client
    :noindex:
 

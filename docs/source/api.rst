@@ -142,6 +142,11 @@ Advertising Technology
       - This function assumes that the eye tracking data points are equally spaced in time.
       - The fixation detection uses a simple distance-based threshold method.
 
+   :raises ValueError:
+      - If ``results`` or aois is empty
+      - If FPS, fixation_threshold, or distance_threshold are non-positive
+      - For any other error occurring while reading the image file.
+
 .. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]
    :module: vytal.adtech
    :noindex:

@@ -145,7 +145,7 @@ Advertising Technology
 
    :raises ValueError:
       - If ``results`` or ``aois`` is empty.
-      - If ``fps``, ``fixation_threshold``, or ``distance threshold`` are non-positive.
+      - If ``fps``, ``fixation_threshold``, or ``distance_threshold`` are non-positive.
       - The dictionaries in ``results`` or the ``aois`` are invalid.
 
 .. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]

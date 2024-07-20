@@ -528,14 +528,14 @@ Cognitive Science
    :param duration_threshold: (float) Minimum duration in milliseconds for a valid fixation.
    :param angle_type: (str) Specifies which angle data to use for additional fixation info ('face', 'left', 'right').
 
-   :return: A list of dictionaries, each of which represents a detected fixation, containing:
-            - 'start_index': Start index of fixation in data.
-            - 'end_index': End index of fixation.
-            - 'duration': Duration of fixation in milliseconds.
-            - 'centroid_x': Average X-coordinate of fixation.
-            - 'centroid_y': Average Y-coordinate of fixation.
-            - 'dispersion': Calculated dispersion of fixation.
-            - 'mean_angle': Mean angle during the fixation according to 'angle_type'.
+   :return: A dictionary with keys 'left' and 'right', each containing a list of
+        dictionaries. Each dictionary represents a detected saccade with the following keys:
+            - 'start': Index of saccade start in the original data list
+            - 'end': Index of saccade end
+            - 'duration': Duration of the saccade in milliseconds
+            - 'peak': Index of peak velocity
+            - 'peak_velocity': Maximum velocity reached during the saccade (deg/sec)
+            - 'amplitude': Change in eye angle during the saccade (degrees)
    :rtype: List[Dict]
 
    :raises ValueError: If data is empty or missing required keys.

@@ -143,9 +143,9 @@ Advertising Technology
       - The fixation detection uses a simple distance-based threshold method.
 
    :raises ValueError:
-      - If ``results`` or aois is empty
-      - If FPS, fixation_threshold, or distance_threshold are non-positive
-      - For any other error occurring while reading the image file.
+      - If ``results`` or ``aois`` is empty.
+      - If ``fps``, ``fixation_threshold``, or ``distance threshold`` are non-positive.
+      - The dictionaries in ``results`` or the ``aois`` are invalid.
 
 .. py:function:: define_aois(image_path: str) -> Dict[str, Tuple[float, float, float, float]]
    :module: vytal.adtech
@@ -287,9 +287,11 @@ Advertising Technology
       - The function assumes that the AOIs and gaze coordinates use the same coordinate system.
       - The choice of test should be based on the nature of your data and experimental design.
 
-   :raises ValueError: If an invalid test type is specified.
+   :raises ValueError:
+      - If ``group1_results``, ``group2_results``, or ``aois`` is empty.
+      - If an invalid test type is used.
 
-.. py:function:: export_metrics_to_csv(aoi_metrics, general_metrics, filename)
+.. py:function:: export_metrics_to_csv(aoi_metrics: Dict[str, Dict[str, float]], general_metrics: Dict[str, float], filename: str)
    :module: vytal.adtech
    :noindex:
 
@@ -327,6 +329,9 @@ Advertising Technology
       - The function uses the csv module to ensure proper CSV formatting.
 
    :raises IOError: If there's an error writing to the file (e.g., permission denied, disk full).
+   :raises ValueError:
+      - If ``aoi_metrics`` or ``general_metrics`` is not a dictionary.
+      - Filename is not a csv.
 
 HCI
 ---------

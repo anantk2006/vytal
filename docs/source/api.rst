@@ -10,7 +10,7 @@ API
 
 Client
 ------------
-Predicts gaze from webcam data
+Predicts gaze from webcam data.
 
 .. py:module:: vytal.client
     
@@ -465,7 +465,148 @@ HCI
       - The function assumes that timestamps in `gaze_points` are in milliseconds.
 
    :raises ValueError:
-      - If ``distance_threshold``, ``time_threshold``, or ``velocity_threshold`` is non-positive.
+      - If ``time_window``, ``velocity_threshold``, or ``direction_threshold`` is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
+
+Cognitive Science
+---------
+
+.. py:module:: vytal.cogsci
+    
+        The module for Cognitive Science testing.
+    
+.. py:function:: EyeTrackingAnalyzer(data: List[Dict], sampling_rate: float)
+   :noindex:
+
+   :param data: (List[Dict]) A list of dictionaries containing eye tracking data.
+   :param sampling_rate: (float) The sampling rate of the eye tracking data in Hz.
+
+.. py:function:: fixation_detection(gaze_points: List[Tuple[float, float, float], distance_threshold: float=30, time_threshold_ms: float=1500)
+   :module: vytal.hci
+   :noindex:
+
+   Detects fixations in a series of gaze points using a dispersion-based algorithm.
+
+   This function processes a list of gaze points and identifies fixations based on spatial proximity 
+   and temporal duration.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param distance_threshold: Maximum distance (in pixels) between a gaze point and the centroid 
+                              of the current fixation to be considered part of that fixation. 
+                              Default is 30 pixels.
+   :type distance_threshold: float
+   :param time_threshold_ms: Minimum duration (in milliseconds) for a group of gaze points to be 
+                          considered a fixation. Default is 1500 milliseconds.
+   :type time_threshold_ms: float
+
+   :return: A list of detected fixations, where each fixation is represented as a tuple 
+            containing ((centroid_x, centroid_y), duration).
+   :rtype: List[Tuple[Tuple[float, float], float]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points.
+   2. Groups consecutive points that are within the `distance_threshold` of the current fixation's centroid.
+   3. When a point exceeds the distance threshold, it checks if the current group of points meets the `time_threshold_ms`.
+   4. If the time threshold is met, it records the fixation and starts a new potential fixation group.
+   5. After processing all points, it checks if the last group qualifies as a fixation.
+
+   .. note::
+      - This implementation uses a simple dispersion-based algorithm and may not account for more complex eye movement patterns.
+      - The choice of `distance_threshold` and `time_threshold_ms` can significantly affect the results and should be tuned based on the specific use case and recording setup.
+
+   :raises ValueError:
+      - If ``distance_threshold`` or ``time_threshold_ms`` is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
+
+
+
+.. py:function:: saccade_detection(gaze_points: List[Tuple[float, float, float]], velocity_threshold: float=1000)
+   :module: vytal.hci
+   :noindex:
+
+   Detects saccades in a series of gaze points using a velocity-based algorithm.
+
+   This function processes a list of gaze points and identifies saccades based on the velocity 
+   of eye movement between consecutive points.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point. 
+                       Timestamp is expected to be in milliseconds.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param velocity_threshold: Minimum velocity (in pixels per second) for an eye movement 
+                              to be considered a saccade. Default is 1000 pixels/second.
+   :type velocity_threshold: float
+
+   :return: A list of detected saccades, where each saccade is represented as a dictionary 
+            containing start_point, end_point, duration, amplitude, peak_velocity, and average_velocity.
+   :rtype: List[Dict[str, Union[Tuple[float, float, float], float]]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points, calculating the velocity between consecutive points.
+   2. When the velocity exceeds the threshold, it starts or continues a saccade.
+   3. When the velocity drops below the threshold, it ends the current saccade (if any).
+   4. For each saccade, it calculates:
+      - Start and end points
+      - Duration (in milliseconds)
+      - Amplitude (total distance traveled)
+      - Peak velocity
+      - Average velocity
+
+   .. note::
+      - This implementation uses a simple velocity-based algorithm and may not account for more complex eye movement patterns.
+      - The choice of `velocity_threshold` can significantly affect the results and should be tuned based on the specific use case and recording setup.
+      - The function assumes that timestamps are in milliseconds and converts them to seconds for velocity calculations.
+
+   :raises ValueError
+      - If ``velocity_threshold`` is non-positive.
+      - If ``gaze_points`` is empty or contains invalid data.
+
+.. py:function:: detect_smooth_pursuit(gaze_points: List[Tuple[float, float, float]], time_window: int=100, velocity_threshold: float=30, direction_threshold: float=30)
+   :module: vytal.hci
+   :noindex:
+
+   Detect smooth pursuit movements in a sequence of gaze points.
+
+   This function analyzes a series of gaze points to identify segments that represent smooth pursuit eye movements,
+   based on velocity and direction consistency over a specified time window.
+
+   :param gaze_points: A list of tuples, each containing (x, y, timestamp) of a gaze point.
+                       Timestamp is expected to be in milliseconds.
+   :type gaze_points: List[Tuple[float, float, float]]
+   :param time_window: Minimum duration (in milliseconds) for a segment to be considered smooth pursuit.
+                       Default is 100 ms.
+   :type time_window: int
+   :param velocity_threshold: Maximum velocity (in pixels per second) for an eye movement 
+                              to be considered smooth pursuit. Default is 30 pixels/second.
+   :type velocity_threshold: float
+   :param direction_threshold: Maximum change in direction (in degrees) allowed between consecutive
+                               gaze points to be considered part of the same smooth pursuit.
+                               Default is 30 degrees.
+   :type direction_threshold: float
+
+   :return: A list of detected smooth pursuit segments, where each segment is represented 
+            as a tuple containing (start_index, end_index, duration).
+   :rtype: List[Tuple[int, int, float]]
+
+   The function works as follows:
+
+   1. Iterates through the gaze points, calculating velocity and direction between consecutive points.
+   2. Identifies continuous segments where:
+      - The velocity remains below the `velocity_threshold`
+      - The change in direction remains below the `direction_threshold`
+      - The duration of the segment is at least `time_window`
+   3. Records each qualifying segment as a smooth pursuit movement.
+
+   .. note::
+      - This implementation uses a simple algorithm based on velocity and direction consistency.
+      - The choice of `velocity_threshold`, `direction_threshold`, and `time_window` can significantly 
+        affect the results and should be tuned based on the specific use case and recording setup.
+      - The function assumes that timestamps in `gaze_points` are in milliseconds.
+
+   :raises ValueError:
+      - If ``time_window``, ``velocity_threshold``, or ``direction_threshold`` is non-positive.
       - If ``gaze_points`` is empty or contains invalid data.
     
 

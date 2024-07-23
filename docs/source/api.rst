@@ -31,7 +31,7 @@ Predicts gaze from webcam data.
    :return: scipy.interpolate._rbfinterp.RBFInterpolator object, a string, or bytes containing calibration data.
    The user will be presented with a calibration task consisting of focusing on spinning triangles at different locations on the screen. For effective calibration, instructions should be followed closely.
 
-.. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> Dict[str, Any]
+.. py:function:: predict_from_video(video_path: str, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, eye_frames: bool = False) -> List[Dict[str, torch.Tensor]]
    :module: vytal.client
    :noindex:
 
@@ -40,10 +40,10 @@ Predicts gaze from webcam data.
    :param video_path: (str) The path to the video file.
    :param calib: (scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes) A calibration object or data used for prediction.
    :param eye_frames: (bool) Whether to return the eye frames (128x128 images used for prediction)
-   :return: A dictionary containing the gaze predictions. 
+   :return: A list of dictionaries containing the gaze predictions. Each dictionary represents a frame.
    The keys are 'left', 'right', 'le_3d', 're_3d', 'hr', 'ht', 'blinked', 
    and optionally "right_eye_frame" and "left_eye_frame" if eye_frames is True.
-   Each key maps to a tensor containing the predictions for each frame in the video.
+   Each key maps to a tensor containing the predictions.
 
 .. py:function:: start_thread(cam_id: int = 0, calib: Union[scipy.interpolate._rbfinterp.RBFInterpolator, str, bytes] = None, verbose: bool = False, show_frame: bool = False, eye_frames: bool = False) -> threading.Thread
     :module: vytal.client
@@ -110,8 +110,8 @@ Advertising Technology
    This function processes a series of eye gaze predictions and calculates various metrics
    for predefined Areas of Interest (AOIs) as well as general viewing metrics.
 
-   :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
-                   representing the predicted x and y coordinates of the eye gaze.
+   :param results: A list of dictionaries, each containing a 'PoG' key
+                            representing the predicted x and y coordinates of the eye gaze as a tensor.
    :type results: list of dict
    :param aois: A dictionary where keys are AOI names and values are tuples representing
                 the bounding rectangle of each AOI in the format (x1, y1, x2, y2).
@@ -185,7 +185,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file.
 
-.. py:function:: plot_gaze_path(results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], image_path: str)
+.. py:function:: plot_gaze_path(results: List[Dict[str, torch.Tensor]], aois: Dict[str, Tuple[float, float, float, float]], image_path: str)
    :module: vytal.adtech
    :noindex:
 
@@ -194,8 +194,8 @@ Advertising Technology
    This function creates a plot showing the path of the viewer's gaze overlaid on the original image,
    along with the defined Areas of Interest (AOIs).
 
-   :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
-                   representing the predicted x and y coordinates of the eye gaze.
+   :param results: A list of dictionaries, each containing a 'PoG' key
+                            representing the predicted x and y coordinates of the eye gaze as a tensor.
    :type results: List[Dict[str, float]]
    :param aois: A dictionary where keys are AOI names and values are tuples representing 
                 the bounding box of each AOI in the format (x1, y1, x2, y2).
@@ -218,7 +218,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file.
 
-.. py:function:: generate_heatmap(results: List[Dict[str, float]], image_path: str. bins: int = 50)
+.. py:function:: generate_heatmap(results: List[Dict[str, torch.Tensor]], image_path: str. bins: int = 50)
    :module: vytal.adtech
    :noindex:
 
@@ -227,8 +227,8 @@ Advertising Technology
    This function generates a heatmap visualization of the gaze data, showing areas of high and low
    gaze concentration overlaid on the original image.
 
-   :param results: A list of dictionaries, each containing 'pred_x' and 'pred_y' keys
-                   representing the predicted x and y coordinates of the eye gaze.
+   :param results: A list of dictionaries, each containing a 'PoG' key
+                            representing the predicted x and y coordinates of the eye gaze as a tensor.
    :type results: List[Dict[str, float]]
    :param image_path: Path to the image file used as the background for the heatmap.
    :type image_path: str
@@ -250,7 +250,7 @@ Advertising Technology
    :raises FileNotFoundError: If the specified image file is not found.
    :raises Exception: For any other error occurring while reading the image file or processing the data.    
 
-.. py:function:: aoi_significance_test(group1_results: List[Dict[str, float]], group2_results: List[Dict[str, float]], aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test')
+.. py:function:: aoi_significance_test(group1_results: List[Dict[str, torch.Tensor]], group2_results: List[Dict[str, torch.Tensor]], aois: Dict[str, Tuple[float, float, float, float]], test: str = 't-test')
    :module: vytal.adtech
    :noindex:
 
@@ -260,7 +260,7 @@ Advertising Technology
    of gaze data, using either a t-test or Mann-Whitney U test.
 
    :param group1_results: Gaze data for the first group. Each dict should contain
-                          'pred_x' and 'pred_y' keys for gaze coordinates.
+                                             the 'PoG' key for gaze coordinates.
    :type group1_results: List[Dict[str, float]]
    :param group2_results: Gaze data for the second group. Same format as group1_results.
    :type group2_results: List[Dict[str, float]]
